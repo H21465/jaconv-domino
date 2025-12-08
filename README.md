@@ -4,7 +4,9 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/jaconv-domino.svg)](https://pypi.org/project/jaconv-domino/)
 [![License](https://img.shields.io/pypi/l/jaconv-domino.svg)](https://pypi.org/project/jaconv-domino/)
 
-jaconv-domino is a Japanese character converter library extending [jaconv](https://github.com/ikegami-yukino/jaconv) with pydomino phoneme conversion features.
+jaconv-domino is a Japanese character converter library extending [jaconv](https://github.com/ikegami-yukino/jaconv) with [pydomino](https://github.com/DwangoMediaVillage/pydomino) phoneme conversion features.
+
+[日本語版 README](README-ja.md)
 
 ## Installation
 
@@ -12,103 +14,103 @@ jaconv-domino is a Japanese character converter library extending [jaconv](https
 pip install jaconv-domino
 ```
 
-## jaconv について
+## About jaconv
 
-jaconv の機能については以下を参照してください：
+For jaconv features, please refer to:
 
 - PyPI: https://pypi.org/project/jaconv/
 - GitHub: https://github.com/ikegami-yukino/jaconv
 
-jaconv の機能は以下のように呼び出せます：
+jaconv functions can be called as follows:
 
 ```python
 import jaconv_domino
 
-# ひらがな → カタカナ
+# Hiragana to Katakana
 jaconv_domino.hira2kata('ともえまみ')
 # => 'トモエマミ'
 
-# カタカナ → ひらがな
+# Katakana to Hiragana
 jaconv_domino.kata2hira('マミサン')
 # => 'まみさん'
 
-# ひらがな → 半角カタカナ
+# Hiragana to Half-width Katakana
 jaconv_domino.hira2hkata('ともえまみ')
 # => 'ﾄﾓｴﾏﾐ'
 
-# 半角 → 全角
+# Half-width to Full-width
 jaconv_domino.h2z('ﾃｨﾛﾌｨﾅｰﾚ')
 # => 'ティロフィナーレ'
-jaconv_domino.hankaku2zenkaku('ﾃｨﾛﾌｨﾅｰﾚ')  # エイリアス
-jaconv_domino.han2zen('ﾃｨﾛﾌｨﾅｰﾚ')  # エイリアス
+jaconv_domino.hankaku2zenkaku('ﾃｨﾛﾌｨﾅｰﾚ')  # alias
+jaconv_domino.han2zen('ﾃｨﾛﾌｨﾅｰﾚ')  # alias
 
-# 全角 → 半角
+# Full-width to Half-width
 jaconv_domino.z2h('ティロフィナーレ')
 # => 'ﾃｨﾛﾌｨﾅｰﾚ'
-jaconv_domino.zenkaku2hankaku('ティロフィナーレ')  # エイリアス
-jaconv_domino.zen2han('ティロフィナーレ')  # エイリアス
+jaconv_domino.zenkaku2hankaku('ティロフィナーレ')  # alias
+jaconv_domino.zen2han('ティロフィナーレ')  # alias
 
-# 正規化 (半角カナ→全角、波ダッシュ→長音など)
+# Normalize (half-width kana to full-width, wave dash to long vowel mark, etc.)
 jaconv_domino.normalize('ﾃｨﾛ･フィナ〜レ')
 # => 'ティロ・フィナーレ'
 
-# かな → ローマ字
+# Kana to Romaji
 jaconv_domino.kana2alphabet('ばなな')
 # => 'banana'
 
-# ローマ字 → ひらがな
+# Romaji to Hiragana
 jaconv_domino.alphabet2kana('ohayou')
 # => 'おはよう'
 
-# カタカナ → ローマ字
+# Katakana to Romaji
 jaconv_domino.kata2alphabet('バナナ')
 # => 'banana'
 
-# ローマ字 → カタカナ
+# Romaji to Katakana
 jaconv_domino.alphabet2kata('ohayou')
 # => 'オハヨウ'
 
-# 小さいかな → 通常のかな
+# Small kana to normal kana
 jaconv_domino.enlargesmallkana('ぁぃぅぇぉ')
 # => 'あいうえお'
 
-# ひらがな → Julius音素形式
+# Hiragana to Julius phoneme format
 jaconv_domino.hiragana2julius('てんきすごくいいいいいい')
 # => 't e N k i s u g o k u i:'
 ```
 
-## pydomino 音素変換 (jaconv-domino 固有機能)
+## pydomino Phoneme Conversion (jaconv-domino specific)
 
-### ひらがな → 音素
+### Hiragana to Phoneme
 
 ```python
 import jaconv_domino
 
-# ひらがなを pydomino 音素形式に変換
+# Convert hiragana to pydomino phoneme format
 jaconv_domino.hiragana2domino('ありがとう')
 # => 'pau a ry i g a t o u pau'
 
-# 改行は pau に変換される (連続する pau は1つにまとめる)
+# Newlines are converted to pau (consecutive pau markers are merged)
 jaconv_domino.hiragana2domino('ありがとう\nこんにちは')
 # => 'pau a ry i g a t o u pau k o N ny i ch i h a pau'
 
-# 文字と音素のマッピング付きで変換
+# Convert with character-phoneme mapping
 phonemes, mapping = jaconv_domino.hiragana2domino_with_mapping('ありがとう')
 # phonemes => 'pau a ry i g a t o u pau'
 # mapping => [('あ', ['a']), ('り', ['ry', 'i']), ('が', ['g', 'a']), ('と', ['t', 'o']), ('う', ['u'])]
 ```
 
-### 音素 → ひらがな
+### Phoneme to Hiragana
 
 ```python
-# pydomino 音素形式をひらがなに変換 (pau は無視される)
+# Convert pydomino phoneme format to hiragana (pau is ignored)
 jaconv_domino.domino2hiragana('pau a ry i g a t o u pau')
 # => 'ありがとう'
 
 jaconv_domino.domino2hiragana('k o N ny i ch i h a')
 # => 'こんにちは'
 
-# タイミング付き音素をタイミング付きひらがなに変換
+# Convert phonemes with timing to hiragana with timing
 phoneme_timings = [
     ("a", 0.0, 0.1),
     ("ry", 0.1, 0.15),
@@ -120,11 +122,11 @@ jaconv_domino.domino2hiragana_with_timing(phoneme_timings)
 # => [('あ', 0.0, 0.1), ('り', 0.1, 0.2), ('が', 0.2, 0.3)]
 ```
 
-### CSV 形式変換 (domino-song 連携用)
+### CSV Format Conversion (for domino-song integration)
 
 ```python
-# CSV 音素タイミング → ひらがな文字列
-# 最初と最後の pau は無視、中間の pau は改行に変換
+# CSV phoneme timing to hiragana string
+# First and last pau are ignored, middle pau becomes newline
 csv = """start,end,phoneme
 0.000,0.620,pau
 0.620,0.680,a
@@ -140,11 +142,11 @@ csv = """start,end,phoneme
 jaconv_domino.domino_csv2hiragana(csv)
 # => 'あり\nあとう'
 
-# CSV 音素タイミング → CSV ひらがなタイミング
+# CSV phoneme timing to CSV hiragana timing
 jaconv_domino.domino_csv2hiragana_csv(csv)
 # => 'hiragana,start,end\nあ,0.62,0.68\nり,0.68,2.01\n...'
 
-# ひらがな CSV → 音素文字列
+# Hiragana CSV to phoneme string
 hiragana_csv = """あ,0.0,0.1
 り,0.1,0.2
 が,0.2,0.3
@@ -156,42 +158,42 @@ jaconv_domino.hiragana_csv2domino(hiragana_csv)
 ```
 
 Notes:
-- カラム順序はヘッダーから自動検出 (`start,end,phoneme` または `phoneme,start,end`)
-- `pau` (ポーズ) 音素: `domino2*` では無視、`*2domino` では改行が pau に変換
-- ひらがな・カタカナ・アルファベット以外の文字 (句読点、記号、長音記号など) は無視されます
+- Column order is auto-detected from header (`start,end,phoneme` or `phoneme,start,end`)
+- `pau` (pause) phoneme: ignored in `domino2*`, newlines converted to pau in `*2domino`
+- Characters other than hiragana, katakana, and alphabet (punctuation, symbols, long vowel marks, etc.) are ignored
 
 ## API Reference
 
-### jaconv 再エクスポート関数
+### jaconv Re-exported Functions
 
-| 関数 | 説明 |
-|------|------|
-| `hira2kata(text)` | ひらがな → 全角カタカナ |
-| `hira2hkata(text)` | ひらがな → 半角カタカナ |
-| `kata2hira(text)` | 全角カタカナ → ひらがな |
-| `h2z(text)` | 半角 → 全角 |
-| `z2h(text)` | 全角 → 半角 |
-| `normalize(text)` | Unicode 正規化 |
-| `kana2alphabet(text)` | かな → ローマ字 |
-| `alphabet2kana(text)` | ローマ字 → ひらがな |
-| `kata2alphabet(text)` | カタカナ → ローマ字 |
-| `alphabet2kata(text)` | ローマ字 → カタカナ |
-| `enlargesmallkana(text)` | 小さいかな → 通常サイズ |
-| `hiragana2julius(text)` | ひらがな → Julius 音素形式 |
+| Function | Description |
+|----------|-------------|
+| `hira2kata(text)` | Hiragana to Full-width Katakana |
+| `hira2hkata(text)` | Hiragana to Half-width Katakana |
+| `kata2hira(text)` | Full-width Katakana to Hiragana |
+| `h2z(text)` | Half-width to Full-width |
+| `z2h(text)` | Full-width to Half-width |
+| `normalize(text)` | Unicode normalization |
+| `kana2alphabet(text)` | Kana to Romaji |
+| `alphabet2kana(text)` | Romaji to Hiragana |
+| `kata2alphabet(text)` | Katakana to Romaji |
+| `alphabet2kata(text)` | Romaji to Katakana |
+| `enlargesmallkana(text)` | Small kana to normal size |
+| `hiragana2julius(text)` | Hiragana to Julius phoneme format |
 
-エイリアス: `hankaku2zenkaku`=`h2z`, `han2zen`=`h2z`, `zenkaku2hankaku`=`z2h`, `zen2han`=`z2h`
+Aliases: `hankaku2zenkaku`=`h2z`, `han2zen`=`h2z`, `zenkaku2hankaku`=`z2h`, `zen2han`=`z2h`
 
-### jaconv-domino 固有関数
+### jaconv-domino Specific Functions
 
-| 関数 | 説明 |
-|------|------|
-| `hiragana2domino(text)` | ひらがな → pydomino 音素形式 |
-| `hiragana2domino_with_mapping(text)` | ひらがな → 音素 (文字マッピング付き) |
-| `domino2hiragana(phonemes)` | pydomino 音素 → ひらがな |
-| `domino2hiragana_with_timing(timings)` | 音素タイミング → ひらがなタイミング |
-| `domino_csv2hiragana(csv)` | CSV 音素タイミング → ひらがな文字列 |
-| `domino_csv2hiragana_csv(csv)` | CSV 音素タイミング → CSV ひらがなタイミング |
-| `hiragana_csv2domino(csv)` | ひらがな CSV → 音素文字列 |
+| Function | Description |
+|----------|-------------|
+| `hiragana2domino(text)` | Hiragana to pydomino phoneme format |
+| `hiragana2domino_with_mapping(text)` | Hiragana to phoneme (with character mapping) |
+| `domino2hiragana(phonemes)` | pydomino phoneme to Hiragana |
+| `domino2hiragana_with_timing(timings)` | Phoneme timing to Hiragana timing |
+| `domino_csv2hiragana(csv)` | CSV phoneme timing to Hiragana string |
+| `domino_csv2hiragana_csv(csv)` | CSV phoneme timing to CSV Hiragana timing |
+| `hiragana_csv2domino(csv)` | Hiragana CSV to phoneme string |
 
 ## License
 
