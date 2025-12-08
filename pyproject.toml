@@ -3,7 +3,7 @@ name = "jaconv-domino"
 version = "0.1.0"
 description = "Japanese character converter extending jaconv with pydomino phoneme conversion"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 keywords = [
   "japanese",

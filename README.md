@@ -6,7 +6,7 @@
 
 jaconv-domino is a Japanese character converter library extending [jaconv](https://github.com/ikegami-yukino/jaconv) with [pydomino](https://github.com/DwangoMediaVillage/pydomino) phoneme conversion features.
 
-[日本語版 README](README-ja.md)
+[日本語版 README](https://github.com/H21465/jaconv-domino/blob/main/README-ja.md)
 
 ## Installation
 
