@@ -15,5 +15,4 @@ info
 .pytest_cache
 .ruff_cache
 test_design
-tests
 main.py
